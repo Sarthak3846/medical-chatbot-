@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from transformers import pipeline 
+import uvicorn
 
 app = FastAPI()
 
@@ -12,3 +13,6 @@ async def chat(data: dict):
     pipe = pipeline("text-generation", model="HuggingFaceTB/SmolLM2-1.7B-Instruct",model_kwargs={"use_cache": True})
     response = pipe(chat, max_new_tokens=512)
     return {"response":response}
+
+if __name__=="__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
